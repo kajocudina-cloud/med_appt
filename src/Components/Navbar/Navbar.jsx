@@ -1,25 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Navbar.css';
-// Importing Link from react-router-dom for internal routing
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-    // State to manage the mobile menu toggle (active/inactive)
     const [isActive, setIsActive] = useState(false);
+    // State to store the user's name if they are logged in
+    const [username, setUsername] = useState("");
 
-    // Function to handle the click event on the mobile menu icon
+    // Check if the user is logged in by looking for the email in sessionStorage
+    useEffect(() => {
+        const storedName = sessionStorage.getItem("name");
+        if (storedName) {
+            setUsername(storedName);
+        }
+    }, []);
+
     const handleClick = () => {
         setIsActive(!isActive);
     };
 
+    // Function to handle logout
+    const handleLogout = () => {
+        sessionStorage.clear(); // Clears all session data (token, name, etc.)
+        setUsername(""); // Reset username state
+        window.location.reload(); // Refresh to update Navbar and protected routes
+    };
+
     return (
         <nav>
-            {/* Navbar Logo section */}
             <div className="nav__logo">
-                {/* Use Link component instead of <a> tag for React SPA routing */}
                 <Link to="/">
                     StayHealthy 
-                    {/* SVG Doctor Icon */}
                     <svg xmlns="http://www.w3.org/2000/svg" height="26" width="26" viewBox="0 0 1000 1000" style={{ fill: '#3685fb' }}>
                         <title>Doctor With Stethoscope SVG icon</title>
                         <g>
@@ -31,12 +42,10 @@ const Navbar = () => {
                 <span>.</span>
             </div>
 
-            {/* Mobile menu icon (hamburger/times) */}
             <div className="nav__icon" onClick={handleClick}>
                 <i className={isActive ? "fa fa-times" : "fa fa-bars"}></i>
             </div>
 
-            {/* Navigation links - classes are toggled based on isActive state */}
             <ul className={`nav__links ${isActive ? 'active' : ''}`}>
                 <li className="link">
                     <Link to="/">Home</Link>
@@ -44,19 +53,36 @@ const Navbar = () => {
                 <li className="link">
                     <Link to="/appointments">Appointments</Link>
                 </li>
-                <li className="link">
-                    <Link to="/signup">
-                        <button className="btn1">Sign Up</button>
-                    </Link>
-                </li>
-                <li className="link">
-                    <Link to="/login">
-                        <button className="btn1">Login</button>
-                    </Link>
-                </li>
+
+                {/* Conditional Rendering: Show Logout if username exists, otherwise show Login/Sign Up */}
+                {username ? (
+                    <>
+                        <li className="link" style={{ color: '#3685fb', fontWeight: 'bold' }}>
+                            Hello, {username}
+                        </li>
+                        <li className="link">
+                            <button className="btn1" onClick={handleLogout}>
+                                Logout
+                            </button>
+                        </li>
+                    </>
+                ) : (
+                    <>
+                        <li className="link">
+                            <Link to="/signup">
+                                <button className="btn1">Sign Up</button>
+                            </Link>
+                        </li>
+                        <li className="link">
+                            <Link to="/login">
+                                <button className="btn1">Login</button>
+                            </Link>
+                        </li>
+                    </>
+                )}
             </ul>
         </nav>
     );
 };
 
-export default Navbar; // Exporting the component for use in the App component
+export default Navbar;
