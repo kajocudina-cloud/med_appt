@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import './Navbar.css';
-// Import Link from react-router-dom
+// Importing Link from react-router-dom for internal routing
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+    // State to manage the mobile menu toggle (active/inactive)
     const [isActive, setIsActive] = useState(false);
 
+    // Function to handle the click event on the mobile menu icon
     const handleClick = () => {
         setIsActive(!isActive);
     };
 
     return (
         <nav>
+            {/* Navbar Logo section */}
             <div className="nav__logo">
-                {/* Use Link instead of a tag for internal routing */}
+                {/* Use Link component instead of <a> tag for React SPA routing */}
                 <Link to="/">
                     StayHealthy 
+                    {/* SVG Doctor Icon */}
                     <svg xmlns="http://www.w3.org/2000/svg" height="26" width="26" viewBox="0 0 1000 1000" style={{ fill: '#3685fb' }}>
                         <title>Doctor With Stethoscope SVG icon</title>
                         <g>
@@ -27,10 +31,12 @@ const Navbar = () => {
                 <span>.</span>
             </div>
 
+            {/* Mobile menu icon (hamburger/times) */}
             <div className="nav__icon" onClick={handleClick}>
                 <i className={isActive ? "fa fa-times" : "fa fa-bars"}></i>
             </div>
 
+            {/* Navigation links - classes are toggled based on isActive state */}
             <ul className={`nav__links ${isActive ? 'active' : ''}`}>
                 <li className="link">
                     <Link to="/">Home</Link>
@@ -53,4 +59,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default Navbar; // Exporting the component for use in the App component
