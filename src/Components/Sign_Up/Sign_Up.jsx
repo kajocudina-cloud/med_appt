@@ -8,11 +8,14 @@ const SignUp = () => {
         <div className="signup-text">
           <h1>Sign Up</h1>
         </div>
+        
         <div className="signup-text1" style={{ textAlign: 'left' }}>
           Already a member? <span><a href="/login" style={{ color: '#2190FF' }}> Login</a></span>
         </div>
+
         <div className="signup-form">
           <form>
+            {/* Role Selection */}
             <div className="form-group">
               <label htmlFor="role">Role</label>
               <select name="role" id="role" required className="form-control">
@@ -22,6 +25,7 @@ const SignUp = () => {
               </select>
             </div>
 
+            {/* Name Input */}
             <div className="form-group">
               <label htmlFor="name">Name</label>
               <input 
@@ -35,6 +39,7 @@ const SignUp = () => {
               />
             </div>
 
+            {/* Phone Input */}
             <div className="form-group">
               <label htmlFor="phone">Phone</label>
               <input 
@@ -48,6 +53,7 @@ const SignUp = () => {
               />
             </div>
 
+            {/* Email Input */}
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input 
@@ -61,6 +67,7 @@ const SignUp = () => {
               />
             </div>
 
+            {/* Password Input */}
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input 
@@ -74,6 +81,7 @@ const SignUp = () => {
               />
             </div>
 
+            {/* Form Action Buttons */}
             <div className="btn-group">
               <button type="submit" className="btn btn-primary mb-2 mr-1 waves-effect waves-light">Submit</button>
               <button type="reset" className="btn btn-danger mb-2 waves-effect waves-light">Reset</button>

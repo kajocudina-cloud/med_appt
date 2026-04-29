@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './Navbar.css';
+// Import Link from react-router-dom
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-    // React način za upravljanje stanjem (otvoren/zatvoren menu)
     const [isActive, setIsActive] = useState(false);
 
     const handleClick = () => {
@@ -12,7 +13,8 @@ const Navbar = () => {
     return (
         <nav>
             <div className="nav__logo">
-                <a href="/">
+                {/* Use Link instead of a tag for internal routing */}
+                <Link to="/">
                     StayHealthy 
                     <svg xmlns="http://www.w3.org/2000/svg" height="26" width="26" viewBox="0 0 1000 1000" style={{ fill: '#3685fb' }}>
                         <title>Doctor With Stethoscope SVG icon</title>
@@ -21,7 +23,7 @@ const Navbar = () => {
                             <path d="M499.8,522.8c71.2,0,129.1-58.7,129.1-129.1H370.6C370.6,464.1,428.6,522.8,499.8,522.8z"></path>
                         </g>
                     </svg>
-                </a>
+                </Link>
                 <span>.</span>
             </div>
 
@@ -29,23 +31,22 @@ const Navbar = () => {
                 <i className={isActive ? "fa fa-times" : "fa fa-bars"}></i>
             </div>
 
-            {/* Dodajemo 'active' klasu ako je isActive true */}
             <ul className={`nav__links ${isActive ? 'active' : ''}`}>
                 <li className="link">
-                    <a href="/">Home</a>
+                    <Link to="/">Home</Link>
                 </li>
                 <li className="link">
-                    <a href="#">Appointments</a>
+                    <Link to="/appointments">Appointments</Link>
                 </li>
                 <li className="link">
-                    <a href="/signup" className="btn1" style={{ textDecoration: 'none', display: 'inline-block', textAlign: 'center' }}>
-                        Sign Up
-                    </a>
+                    <Link to="/signup">
+                        <button className="btn1">Sign Up</button>
+                    </Link>
                 </li>
                 <li className="link">
-                    <a href="/login">
+                    <Link to="/login">
                         <button className="btn1">Login</button>
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </nav>
