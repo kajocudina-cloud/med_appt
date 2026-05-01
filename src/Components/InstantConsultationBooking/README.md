@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import './InstantConsultation.css';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import FindDoctorSearchIC from './FindDoctorSearchIC/FindDoctorSearchIC';
-import DoctorCardIC from './DoctorCardIC/DoctorCardIC';
+This is instant consultation component readme file. You have been provided find doctor search component and  doctorCard fuctionality to display doctors along. You need to integrate instant consultation component with your react website.
+## Note:
+You need to include the InstantConsultation into App.js. 
+**use this to import in App.js**
+import InstantConsultation from './components/InstantConsultation/InstantConsultation';  
+**Use below to write within Route tag of react-router-dom** 
+<Route path="/instant-consultation" element={<InstantConsultation />} />
 
-const InstantConsultation = () => {
-    const [searchParams] = useSearchParams();
-    const [doctors, setDoctors] = useState([]);
-    const [filteredDoctors, setFilteredDoctors] = useState([]);
-    const [isSearched, setIsSearched] = useState(false);
-    
-    const getDoctorsDetails = () => {
-        fetch('https://api.npoint.io/9a5543d36f1460da2f63')
-        .then(res => res.json())
-        .then(data => {
-            if (searchParams.get('speciality')) {
+## Note:
+You can create one button on Navbar as well for instant Booking Consultation which will directly take user to that option for route specified above.
+
+
+## Note:
+useSearchParams is a custom hook introduced in React that provides a convenient way to interact with query parameters in a URL's search string. This hook allows developers to extract, modify, and update query parameters from the URL, enabling dynamic and interactive behavior in React applications. Whether it's building search functionalities, implementing filtering options, or managing state based on URL parameters. For example this is used in **InstantConsultation.js** component to extract searched doctor specility in the basis of what user has searched in search box. Below code is the demo for the code which has been used in **InstantConsultation.js** component.
+
+import { useNavigate, useSearchParams } from 'react-router-dom';
+ const [searchParams] = useSearchParams();
+   if (searchParams.get('speciality')) {
                 // window.reload()
                 const filtered = data.filter(doctor => doctor.speciality.toLowerCase() === searchParams.get('speciality').toLowerCase());
 
@@ -22,64 +23,4 @@ const InstantConsultation = () => {
                 
                 setIsSearched(true);
                 window.reload()
-            } else {
-                setFilteredDoctors([]);
-                setIsSearched(false);
             }
-            setDoctors(data);
-        })
-        .catch(err => console.log(err));
-    }
-    const handleSearch = (searchText) => {
-
-        if (searchText === '') {
-            setFilteredDoctors([]);
-            setIsSearched(false);
-            } else {
-                
-            const filtered = doctors.filter(
-                (doctor) =>
-                // 
-                doctor.speciality.toLowerCase().includes(searchText.toLowerCase())
-                
-            );
-                
-            setFilteredDoctors(filtered);
-            setIsSearched(true);
-            window.location.reload()
-        }
-    };
-    const navigate = useNavigate();
-    useEffect(() => {
-        getDoctorsDetails();
-        // const authtoken = sessionStorage.getItem("auth-token");
-        // if (!authtoken) {
-        //     navigate("/login");
-        // }
-    }, [searchParams])
-
-    return (
-        <center>
-            <div  className="searchpage-container">
-            <FindDoctorSearchIC onSearch={handleSearch} />
-            <div className="search-results-container">
-            {isSearched ? (
-                <center>
-                    <h2>{filteredDoctors.length} doctors are available {searchParams.get('location')}</h2>
-                    <h3>Book appointments with minimum wait-time & verified doctor details</h3>
-                    {filteredDoctors.length > 0 ? (
-                    filteredDoctors.map(doctor => <DoctorCardIC className="doctorcard" {...doctor} key={doctor.name} />)
-                    ) : (
-                    <p>No doctors found.</p>
-                    )}
-                </center>
-                ) : (
-                ''
-                )}
-            </div>
-        </div>
-        </center>
-    )
-}
-
-export default InstantConsultation
