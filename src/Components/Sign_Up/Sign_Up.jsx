@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './Sign_Up.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { API_URL } from '../../../config';
+import { API_URL } from "../../config";
+
 
 const Sign_Up = () => {
     const [name, setName] = useState('');

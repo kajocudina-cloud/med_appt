@@ -49,6 +49,13 @@ const Navbar = () => {
 
             <ul className={`nav__links ${isActive ? 'active' : ''}`}>
                 <li className="link"><Link to="/">Home</Link></li>
+                <li className="link">
+        <Link to="/instant-consultation">Instant Consultation</Link>
+    </li>
+
+    <li className="link">
+        <Link to="/appointments">Appointments</Link>
+    </li>
                 <li className="link"><Link to="/appointments">Appointments</Link></li>
 
                 {username ? (
