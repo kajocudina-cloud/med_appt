@@ -7,11 +7,8 @@ const Navbar = () => {
     const [username, setUsername] = useState("");
 
     useEffect(() => {
-        // 1. Dohvaćamo email iz sessionStorage
         const storedEmail = sessionStorage.getItem("email");
-        
         if (storedEmail) {
-            // 2. Ekstrakcija imena: uzimamo sve prije '@'
             const extractedName = storedEmail.split('@')[0];
             setUsername(extractedName);
         }
@@ -49,25 +46,17 @@ const Navbar = () => {
 
             <ul className={`nav__links ${isActive ? 'active' : ''}`}>
                 <li className="link"><Link to="/">Home</Link></li>
-                <li className="link">
-        <Link to="/instant-consultation">Instant Consultation</Link>
-    </li>
-
-    <li className="link">
-        <Link to="/appointments">Appointments</Link>
-    </li>
+                <li className="link"><Link to="/instant-consultation">Instant Consultation</Link></li>
+                {/* Ovdje je sada samo jedna stavka Appointments */}
                 <li className="link"><Link to="/appointments">Appointments</Link></li>
 
                 {username ? (
                     <>
-                        {/* Prikaz imena lijevo od gumba */}
                         <li className="link" style={{ color: '#3685fb', fontWeight: 'bold' }}>
                             Welcome, {username}
                         </li>
                         <li className="link">
-                            <button className="btn1" onClick={handleLogout}>
-                                Logout
-                            </button>
+                            <button className="btn1" onClick={handleLogout}>Logout</button>
                         </li>
                     </>
                 ) : (
