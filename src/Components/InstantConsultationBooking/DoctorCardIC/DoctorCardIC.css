@@ -189,3 +189,31 @@ button:hover {
   cursor: pointer;
   /* color: rgb(249, 60, 60); */
 }
+
+.booked-details-inline {
+  text-align: left;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.appointment-booked-text {
+  color: #000;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.cancel-appointment-btn {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.cancel-appointment-btn:hover {
+  background-color: #0056b3;
+}

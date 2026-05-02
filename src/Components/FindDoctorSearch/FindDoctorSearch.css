@@ -1,0 +1,61 @@
+.search-container {
+    position: relative; /* Enables absolute positioning of the list */
+    width: 500px;
+    margin: 0 auto;
+}
+
+.search-form {
+    display: flex;
+    width: 100%;
+}
+
+.search-input {
+    flex: 1;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 25px 0 0 25px;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-button {
+    padding: 0 25px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0 25px 25px 0;
+    cursor: pointer;
+}
+
+/* Styles for the list of specialties */
+.speciality-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 0 0 10px 10px;
+}
+
+.speciality-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+.speciality-item:last-child {
+    border-bottom: none;
+}
+
+.speciality-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+}
