@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
 import './FindDoctorSearch.css';
 
-// List of specialties to display
 const initSpeciality = [
     'Dentist', 'Gynecologist/Obstetrician', 'General Physician', 
     'Dermatologist', 'Ear-nose-throat (ent) Specialist', 'Homeopath', 'Ayurveda'
 ];
 
-const FindDoctorSearch = () => {
+const FindDoctorSearch = ({ onSearch }) => { // Dodan prop onSearch
     const [searchQuery, setSearchQuery] = useState('');
     const [showSpecialities, setShowSpecialities] = useState(false);
 
     const handleSearch = (e) => {
-        e.preventDefault();
-        console.log("Pretražujem:", searchQuery);
-        setShowSpecialities(false); // Sakrij listu nakon pretrage
+        if (e) e.preventDefault();
+        onSearch(searchQuery); // Poziva funkciju iz InstantConsultation
+        setShowSpecialities(false);
     };
 
-    // Function called when the user clicks on a specialty from the list
     const handleSpecialitySelect = (speciality) => {
         setSearchQuery(speciality);
         setShowSpecialities(false);
+        onSearch(speciality); // Odmah filtrira kad klikneš na listu
     };
 
     return (
@@ -28,7 +27,8 @@ const FindDoctorSearch = () => {
             <center>
                 <h1>Find a doctor and Consult instantly</h1>
                 <div className="doctor-icon-main">
-                    <img src="doctor-icon.png" alt="Doctor Icon" style={{width: '150px'}} />
+                    {/* IZBRISAN IMG TAG I ZAMIJENJEN IKONOM DA NE PIŠE "Doctor Icon" */}
+                    <i className="fa fa-user-md" style={{color:'#007bff', fontSize:'5rem', marginBottom:'20px'}}></i>
                 </div>
                 
                 <div className="search-container">
@@ -39,22 +39,20 @@ const FindDoctorSearch = () => {
                             placeholder="Search doctors, clinics, hospitals, etc."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            // Implementacija onFocus i onBlur
                             onFocus={() => setShowSpecialities(true)}
-                            onBlur={() => setTimeout(() => setShowSpecialities(false), 200)} // Delay omogućuje klik na stavku
+                            onBlur={() => setTimeout(() => setShowSpecialities(false), 200)}
                         />
                         <button type="submit" className="search-button">
                             <i className="fa fa-search"></i> Search
                         </button>
                     </form>
 
-                    {/* List of specialties that is conditionally displayed */}
                     {showSpecialities && (
                         <ul className="speciality-list">
                             {initSpeciality.map((spec, index) => (
                                 <li 
                                     key={index} 
-                                    onMouseDown={() => handleSpecialitySelect(spec)} // onMouseDown se okida prije onBlur
+                                    onMouseDown={() => handleSpecialitySelect(spec)}
                                     className="speciality-item"
                                 >
                                     <i className="fa fa-search" style={{marginRight: '10px', color: '#888'}}></i>

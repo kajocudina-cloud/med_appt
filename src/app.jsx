@@ -11,23 +11,37 @@ import FindDoctorSearch from './Components/FindDoctorSearch/FindDoctorSearch';
 
 
 function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Navbar />
-
-        <Routes>
-          <Route path="/" element={<Landing_Page />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-
-          <Route path="/instant-consultation" element={<InstantConsultation />} />
-          <Route path="/find-doctor" element={<FindDoctorSearch />} />
-          
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+    return (
+        <center>
+            <div className="searchpage-container">
+                <FindDoctorSearch onSearch={handleSearch} />
+                
+                <div className="search-results-container" style={{ marginTop: '70px' }}>
+                    
+                    <h2>{isSearched ? filteredDoctors.length : doctors.length} doctors available</h2>
+                    <h3>Book appointments with minimum wait-time & verified doctor details</h3>
+                    
+                   
+                    <div style={{ 
+                        display: 'flex', 
+                        flexDirection: 'row', 
+                        flexWrap: 'wrap', 
+                        justifyContent: 'center', 
+                        gap: '20px', 
+                        marginTop: '30px' 
+                    }}>
+                        
+                        {(isSearched ? filteredDoctors : doctors).map((doctor, index) => (
+                            <DoctorCard 
+                                className="doctorcard" 
+                                {...doctor} 
+                                key={`${doctor.name}-${index}`} 
+                            />
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </center>
+    );
 }
-
 export default App;
