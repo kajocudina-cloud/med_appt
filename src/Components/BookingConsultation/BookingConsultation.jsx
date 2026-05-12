@@ -12,22 +12,44 @@ const BookingConsultation = () => {
         fetch('https://api.npoint.io/9a5543d36f1460da2f63')
             .then(res => res.json())
             .then(data => {
+                const myAdditionalDoctors = [
+                    { 
+                        name: "Dr. Annie Andrews", 
+                        speciality: "Dermatologist", 
+                        experience: "8", 
+                        ratings: "4.8", 
+                        profilePic: "https://cdn-icons-png.flaticon.com/512/3304/3304567.png"
+                    },
+                    { 
+                        name: "Dr. Mark Landon", 
+                        speciality: "Gynecologist/Obstetrician", 
+                        experience: "7", 
+                        ratings: "5.0", 
+                        profilePic: "https://cdn.pixabay.com/photo/2017/01/31/22/32/doctor-2027768_1280.png" 
+                    }
+                ];
+    
                 
-                const limitedData = data.slice(0, 4);
-                setDoctors(limitedData);
-                setFilteredDoctors(limitedData);
+                const allDoctors = [...myAdditionalDoctors, ...data];
+                
+                setDoctors(allDoctors);
+                setFilteredDoctors(allDoctors);
             })
-            .catch(err => console.log(err));
-    }
+            .catch(err => console.error("Greška pri dohvaćanju:", err));
+    };
 
     const handleSearch = (searchText) => {
-        if (searchText === '') {
+        if (!searchText || searchText.trim() === "") {
             setFilteredDoctors(doctors);
             setIsSearched(false);
         } else {
-            const filtered = doctors.filter(
-                (doctor) => doctor.speciality.toLowerCase().includes(searchText.toLowerCase())
-            );
+            const searchTerm = searchText.toLowerCase().trim();
+            
+            const filtered = doctors.filter((doctor) => {
+                
+                return doctor.speciality.toLowerCase().includes(searchTerm);
+            });
+    
             setFilteredDoctors(filtered);
             setIsSearched(true);
         }

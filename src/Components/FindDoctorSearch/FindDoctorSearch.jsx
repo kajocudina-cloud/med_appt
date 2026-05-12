@@ -38,7 +38,10 @@ const FindDoctorSearch = ({ onSearch }) => {
                             className="search-input"
                             placeholder="Search doctors, clinics, hospitals, etc."
                             value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onChange={(e) => {
+                                setSearchQuery(e.target.value);
+                                onSearch(e.target.value); // DODAJ OVO za "live search"
+                            }}
                             onFocus={() => setShowSpecialities(true)}
                             onBlur={() => setTimeout(() => setShowSpecialities(false), 200)}
                         />

@@ -100,7 +100,7 @@ const DoctorCard = () => {
       />
       <DoctorDetails 
         name="Dr. Mark Landon" 
-        speciality="Gynecologist" 
+        speciality="Gynecologist/Obstetrician" 
         experience="7" 
         ratings="5.0" 
         profilePic="https://cdn.pixabay.com/photo/2017/01/31/22/32/doctor-2027768_1280.png" 

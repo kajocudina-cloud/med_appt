@@ -45,7 +45,6 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic }) => 
       </div>
 
       <div className="doctor-card-options-container">
-        {/* LOGIKA ZAMJENE SADRŽAJA NA KARTICI PREMA SLICI Confirm_2.png */}
         {appointments.length > 0 ? (
           <div className="booked-details-inline">
             <h3 className="appointment-booked-text">Appointment Booked!</h3>
