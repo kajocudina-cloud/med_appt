@@ -15,7 +15,7 @@ function App() {
                 <Route path="/" element={<Landing_Page />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
-                {/* Samo ova ruta prikazuje doktore */}
+                
                 <Route path="/instant-consultation" element={<InstantConsultation />} />
             </Routes>
         </BrowserRouter>

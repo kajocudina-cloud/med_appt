@@ -72,6 +72,6 @@ const InstantConsultation = () => {
             </div>
         </center>
     );
-}; // Ovdje završava komponenta
+};
 
 export default InstantConsultation;

@@ -6,20 +6,20 @@ const initSpeciality = [
     'Dermatologist', 'Ear-nose-throat (ent) Specialist', 'Homeopath', 'Ayurveda'
 ];
 
-const FindDoctorSearch = ({ onSearch }) => { // Dodan prop onSearch
+const FindDoctorSearch = ({ onSearch }) => { 
     const [searchQuery, setSearchQuery] = useState('');
     const [showSpecialities, setShowSpecialities] = useState(false);
 
     const handleSearch = (e) => {
         if (e) e.preventDefault();
-        onSearch(searchQuery); // Poziva funkciju iz InstantConsultation
+        onSearch(searchQuery); 
         setShowSpecialities(false);
     };
 
     const handleSpecialitySelect = (speciality) => {
         setSearchQuery(speciality);
         setShowSpecialities(false);
-        onSearch(speciality); // Odmah filtrira kad klikneš na listu
+        onSearch(speciality); 
     };
 
     return (
@@ -27,7 +27,7 @@ const FindDoctorSearch = ({ onSearch }) => { // Dodan prop onSearch
             <center>
                 <h1>Find a doctor and Consult instantly</h1>
                 <div className="doctor-icon-main">
-                    {/* IZBRISAN IMG TAG I ZAMIJENJEN IKONOM DA NE PIŠE "Doctor Icon" */}
+                    
                     <i className="fa fa-user-md" style={{color:'#007bff', fontSize:'5rem', marginBottom:'20px'}}></i>
                 </div>
                 

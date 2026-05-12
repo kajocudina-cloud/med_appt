@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './DoctorCard.css';
+import AppointmentForm from '../AppointmentForm/AppointmentForm';
 
 const DoctorDetails = ({ name, speciality, experience, ratings, profilePic }) => {
+  
+  const [showForm, setShowForm] = useState(false);
+
+  const handleBooking = (formData) => {
+    
+    console.log("Termin rezerviran:", formData);
+    setShowForm(false);
+    alert(`Termin kod dr. ${name} je uspješno rezerviran!`);
+  };
+
   return (
-        <div className="doctor-card-container"> 
-      
-            <div className="doctor-card-body"> 
+    <div className="doctor-card-container"> 
+      <div className="doctor-card-body"> 
         <div className="doctor-card-profile-image">
           <img src={profilePic} alt={name} />
         </div>
@@ -17,41 +27,55 @@ const DoctorDetails = ({ name, speciality, experience, ratings, profilePic }) =>
         </div>
       </div>
 
-            <button className="book-appointment-btn">
-        <div>Book Appointment</div>
+      
+      <button 
+        className="book-appointment-btn" 
+        onClick={() => setShowForm(!showForm)}
+      >
+        <div>{showForm ? "Cancel Booking" : "Book Appointment"}</div>
         <div className="no-fee-text">No Booking Fee</div>
       </button>
 
+      
+      {showForm && (
+        <div className="appointment-form-overlay">
+          <AppointmentForm 
+            doctorName={name} 
+            doctorSpeciality={speciality} 
+            onSubmit={handleBooking} 
+          />
+        </div>
+      )}
     </div>
   );
 };
 
 const DoctorCard = () => {
-    return (
-        <div className="doctor-cards-list">
-            <DoctorDetails 
-                name="Dr. Mathew Philip" 
-                speciality="Dentist" 
-                experience="12" 
-                ratings="4.5" 
-                profilePic="https://cdn.pixabay.com/photo/2017/01/31/22/32/doctor-2027768_1280.png" 
-            />
-            <DoctorDetails 
-                name="Dr. Annie Andrews" 
-                speciality="Dermatologist" 
-                experience="8" 
-                ratings="4.8" 
-                profilePic="https://cdn-icons-png.flaticon.com/512/3304/3304567.png"
-            />
-                        <DoctorDetails 
-                name="Dr. Mark Landon" 
-                speciality="Gynecologist" 
-                experience="7" 
-                ratings="5.0" 
-                profilePic="https://cdn.pixabay.com/photo/2017/01/31/22/32/doctor-2027768_1280.png" 
-            />
-        </div>
-    );
+  return (
+    <div className="doctor-cards-list">
+      <DoctorDetails 
+        name="Dr. Mathew Philip" 
+        speciality="Dentist" 
+        experience="12" 
+        ratings="4.5" 
+        profilePic="https://cdn.pixabay.com/photo/2017/01/31/22/32/doctor-2027768_1280.png" 
+      />
+      <DoctorDetails 
+        name="Dr. Annie Andrews" 
+        speciality="Dermatologist" 
+        experience="8" 
+        ratings="4.8" 
+        profilePic="https://cdn-icons-png.flaticon.com/512/3304/3304567.png"
+      />
+      <DoctorDetails 
+        name="Dr. Mark Landon" 
+        speciality="Gynecologist" 
+        experience="7" 
+        ratings="5.0" 
+        profilePic="https://cdn.pixabay.com/photo/2017/01/31/22/32/doctor-2027768_1280.png" 
+      />
+    </div>
+  );
 };
 
 export default DoctorCard;

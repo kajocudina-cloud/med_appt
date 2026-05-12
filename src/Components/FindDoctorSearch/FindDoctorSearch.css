@@ -1,5 +1,5 @@
 .search-container {
-    position: relative; /* Enables absolute positioning of the list */
+    position: relative;
     width: 500px;
     margin: 0 auto;
 }
@@ -7,27 +7,37 @@
 .search-form {
     display: flex;
     width: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
 .search-input {
     flex: 1;
-    padding: 15px;
+    height: 50px;
+    padding: 0 20px;
     border: 1px solid #ddd;
     border-radius: 25px 0 0 25px;
     outline: none;
     font-size: 16px;
+    box-sizing: border-box;
 }
 
 .search-button {
+    height: 50px;
     padding: 0 25px;
     background-color: #007bff;
     color: white;
-    border: none;
+    border: 1px solid #007bff;
     border-radius: 0 25px 25px 0;
     cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 }
 
-/* Styles for the list of specialties */
+
 .speciality-list {
     position: absolute;
     top: 100%;
