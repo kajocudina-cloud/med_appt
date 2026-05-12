@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
 import './DoctorCard.css';
 import AppointmentForm from '../AppointmentForm/AppointmentForm';
+import { v4 as uuidv4 } from 'uuid'; 
 
 const DoctorDetails = ({ name, speciality, experience, ratings, profilePic }) => {
-  
   const [showForm, setShowForm] = useState(false);
+  const [appointments, setAppointments] = useState([]); 
 
   const handleBooking = (formData) => {
-    
-    console.log("Termin rezerviran:", formData);
+    const newAppointment = {
+      id: uuidv4(),
+      ...formData,
+    };
+    setAppointments([newAppointment]); 
     setShowForm(false);
-    alert(`Termin kod dr. ${name} je uspješno rezerviran!`);
+    alert(`The appointment with Dr. ${name} has been successfully booked!`);
+  };
+
+  const handleCancel = (appointmentId) => {
+    const updatedAppointments = appointments.filter((appointment) => appointment.id !== appointmentId);
+    setAppointments(updatedAppointments);
+    alert(`Your appointment with Dr. ${name} has been canceled.`);
   };
 
   return (
@@ -27,17 +37,38 @@ const DoctorDetails = ({ name, speciality, experience, ratings, profilePic }) =>
         </div>
       </div>
 
-      
-      <button 
-        className="book-appointment-btn" 
-        onClick={() => setShowForm(!showForm)}
-      >
-        <div>{showForm ? "Cancel Booking" : "Book Appointment"}</div>
-        <div className="no-fee-text">No Booking Fee</div>
-      </button>
+      <div className="doctor-card-options-container">
+        
+        {appointments.length > 0 ? (
+          <div className="booked-details">
+            <h3 className="appointment-booked-text">Appointment Booked!</h3>
+            {appointments.map((appointment) => (
+              <div key={appointment.id} className="appointment-info">
+                <p><strong>Patient:</strong> {appointment.name}</p>
+                <p><strong>Date:</strong> {appointment.date}</p>
+                <p><strong>Time:</strong> {appointment.selectedSlot}</p>
+                <button 
+                  className="cancel-appointment-btn" 
+                  onClick={() => handleCancel(appointment.id)}
+                >
+                  Cancel Appointment
+                </button>
+              </div>
+            ))}
+          </div>
+        ) : (
+          /* If there is no appointment, show a button to open the form */
+          <button 
+            className="book-appointment-btn" 
+            onClick={() => setShowForm(!showForm)}
+          >
+            <div>{showForm ? "Cancel Selection" : "Book Appointment"}</div>
+            <div className="no-fee-text">No Booking Fee</div>
+          </button>
+        )}
+      </div>
 
-      
-      {showForm && (
+      {showForm && appointments.length === 0 && (
         <div className="appointment-form-overlay">
           <AppointmentForm 
             doctorName={name} 
