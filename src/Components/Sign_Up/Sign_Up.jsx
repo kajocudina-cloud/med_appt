@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Sign_Up.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { API_URL } from "../../config";
+import { API_URL } from "../InstantConsultationBooking/FindDoctorSearchIC/config";
 
 
 const Sign_Up = () => {
@@ -50,38 +50,40 @@ const Sign_Up = () => {
     };
 
     return (
-        <div className="container" style={{marginTop:'5%'}}>
-            <div className="signup-grid">
-                <div className="signup-form">
+        <div className="container">
+            <div className="signup-wrapper">
+                <div className="signup-card">
                     <form method="POST" onSubmit={register}>
+                        <h1 style={{textAlign:'center', color:'#3c79a7', marginBottom:'20px'}}>Sign Up</h1>
+                        
                         {/* Name Field */}
                         <div className="form-group">
                             <label htmlFor="name">Name</label>
-                            <input value={name} onChange={(e) => setName(e.target.value)} type="text" name="name" id="name" className="form-control" placeholder="Enter your name" />
+                            <input value={name} onChange={(e) => setName(e.target.value)} type="text" name="name" id="name" className="form-control" placeholder="Enter your name" required />
                         </div>
-
+    
                         {/* Email Field */}
                         <div className="form-group">
                             <label htmlFor="email">Email</label>
-                            <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" className="form-control" placeholder="Enter your email" />
-                            {showerr && <div className="err" style={{ color: 'red' }}>{showerr}</div>}
+                            <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" className="form-control" placeholder="Enter your email" required />
+                            {showerr && <div className="err" style={{ color: 'red', fontSize: '12px' }}>{showerr}</div>}
                         </div>
-
+    
                         {/* Phone Field */}
                         <div className="form-group">
                             <label htmlFor="phone">Phone</label>
-                            <input value={phone} onChange={(e) => setPhone(e.target.value)} type="tel" name="phone" id="phone" className="form-control" placeholder="Enter your phone number" />
+                            <input value={phone} onChange={(e) => setPhone(e.target.value)} type="tel" name="phone" id="phone" className="form-control" placeholder="Enter your phone number" required />
                         </div>
-
+    
                         {/* Password Field */}
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
-                            <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" className="form-control" placeholder="Enter your password" />
+                            <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" className="form-control" placeholder="Enter your password" required />
                         </div>
-
+    
                         <div className="btn-group">
-                            <button type="submit" className="btn btn-primary mb-2 mr-1 waves-effect waves-light">Submit</button>
-                            <button type="reset" className="btn btn-danger mb-2 waves-effect waves-light">Reset</button>
+                            <button type="submit" className="btn btn-primary">Submit</button>
+                            <button type="reset" className="btn btn-danger" onClick={() => {setName(''); setEmail(''); setPhone(''); setPassword('');}}>Reset</button>
                         </div>
                     </form>
                 </div>

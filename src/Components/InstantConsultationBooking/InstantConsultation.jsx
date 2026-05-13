@@ -1,51 +1,63 @@
 import React, { useEffect, useState } from 'react';
 import './InstantConsultation.css';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import FindDoctorSearch from '../FindDoctorSearch/FindDoctorSearch';
 import DoctorCard from '../DoctorCard/DoctorCard';
 
+const MY_DOCTORS = [
+    { 
+        name: "Dr. Mathew Philip", 
+        speciality: "Dentist", 
+        experience: "12", 
+        ratings: "4.5", 
+        profilePic: "https://cdn.pixabay.com/photo/2017/01/31/22/32/doctor-2027768_1280.png" 
+    },
+    { 
+        name: "Dr. Annie Andrews", 
+        speciality: "Dermatologist", 
+        experience: "8", 
+        ratings: "4.8", 
+        profilePic: "https://cdn-icons-png.flaticon.com/512/3304/3304567.png"
+    },
+    { 
+        name: "Dr. Mark Landon", 
+        speciality: "Gynecologist/Obstetrician", 
+        experience: "7", 
+        ratings: "5.0", 
+        profilePic: "https://cdn.pixabay.com/photo/2017/01/31/22/32/doctor-2027768_1280.png" 
+    }
+];
+
 const InstantConsultation = () => {
     const [searchParams] = useSearchParams();
-    const [doctors, setDoctors] = useState([]);
-    const [filteredDoctors, setFilteredDoctors] = useState([]);
+    const [filteredDoctors, setFilteredDoctors] = useState(MY_DOCTORS);
     const [isSearched, setIsSearched] = useState(false);
 
-    const getDoctorsDetails = () => {
-        fetch('https://api.npoint.io/9a5543d36f1460da2f63')
-        .then(res => res.json())
-        .then(data => {
-            const limitedData = data.slice(0, 3);
-            setDoctors(limitedData);
-
-            if (searchParams.get('speciality')) {
-                const filtered = limitedData.filter(doctor => 
-                    doctor.speciality.toLowerCase() === searchParams.get('speciality').toLowerCase()
-                );
-                setFilteredDoctors(filtered);
-                setIsSearched(true);
-            } else {
-                setFilteredDoctors([]);
-                setIsSearched(false);
-            }
-        })
-        .catch(err => console.log(err));
-    }
-
-    const handleSearch = (searchText) => {
-        if (searchText === '') {
-            setFilteredDoctors([]);
+        const performSearch = (searchText) => {
+        if (!searchText || searchText.trim() === "") {
+            setFilteredDoctors(MY_DOCTORS);
             setIsSearched(false);
         } else {
-            const filtered = doctors.filter(
-                (doctor) => doctor.speciality.toLowerCase().includes(searchText.toLowerCase())
+            const filtered = MY_DOCTORS.filter(doctor => 
+                doctor.speciality.toLowerCase().includes(searchText.toLowerCase())
             );
             setFilteredDoctors(filtered);
             setIsSearched(true);
         }
     };
 
-    useEffect(() => {
-        getDoctorsDetails();
+    const handleSearch = (searchText) => {
+        performSearch(searchText);
+    };
+
+        useEffect(() => {
+        const specParam = searchParams.get('speciality');
+        if (specParam) {
+            performSearch(specParam);
+        } else {
+            setFilteredDoctors(MY_DOCTORS);
+            setIsSearched(false);
+        }
     }, [searchParams]);
 
     return (
@@ -55,11 +67,11 @@ const InstantConsultation = () => {
                 
                 <div className="search-results-container" style={{ marginTop: '70px' }}>
                     <center>
-                        <h2>{isSearched ? filteredDoctors.length : doctors.length} doctors available</h2>
+                        <h2>{filteredDoctors.length} doctors available</h2>
                         <h3>Book appointments with minimum wait-time & verified doctor details</h3>
                         
                         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', marginTop: '30px' }}>
-                            {(isSearched ? filteredDoctors : doctors).map((doctor, index) => (
+                            {filteredDoctors.map((doctor, index) => (
                                 <DoctorCard 
                                     className="doctorcard" 
                                     {...doctor} 

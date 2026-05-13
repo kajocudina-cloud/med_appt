@@ -40,7 +40,7 @@ const FindDoctorSearch = ({ onSearch }) => {
                             value={searchQuery}
                             onChange={(e) => {
                                 setSearchQuery(e.target.value);
-                                onSearch(e.target.value); // DODAJ OVO za "live search"
+                                onSearch(e.target.value); 
                             }}
                             onFocus={() => setShowSpecialities(true)}
                             onBlur={() => setTimeout(() => setShowSpecialities(false), 200)}

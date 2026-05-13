@@ -175,7 +175,7 @@ li {
     width: 200px;
     animation: blobani 8s infinite ease;
 }
-  
+
   
   @keyframes blobani {
     0% {top: 0; left: 0; transform: scale(1);}
