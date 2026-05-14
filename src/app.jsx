@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-// Uvezi Notification komponentu
+// Import the Notification component
 import Notification from './Components/Notification/Notification';
 import Landing_Page from './Components/Landing_Page/Landing_Page';
 import Login from './Components/Login/Login';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Dodan useEffect
 import './DoctorCard.css';
 import AppointmentForm from '../AppointmentForm/AppointmentForm';
 import { v4 as uuidv4 } from 'uuid'; 
@@ -7,21 +7,53 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
   const [showForm, setShowForm] = useState(false);
   const [appointments, setAppointments] = useState([]); 
 
+    useEffect(() => {
+    const storedAppointment = localStorage.getItem(name);
+    if (storedAppointment) {
+      setAppointments([JSON.parse(storedAppointment)]);
+    }
+  }, [name]);
+  // ----------------------------------------------------------------
+
   const handleBooking = (formData) => {
     const newAppointment = {
       id: uuidv4(),
       ...formData,
     };
     
-    setAppointments([...appointments, newAppointment]); 
+   
+    setAppointments([newAppointment]); 
+    
+        localStorage.setItem('doctorData', JSON.stringify({ name: name }));
+    
+        localStorage.setItem(name, JSON.stringify({
+        name: formData.name,
+        date: formData.date,
+        time: formData.selectedSlot, 
+        id: newAppointment.id
+    }));
+    // ------------------------------------------------
+
     setShowForm(false);
     alert(`The appointment with Dr. ${name} has been successfully booked!`);
+    
+    // We refresh the page so that the Notification component immediately "sees" the change.
+    window.location.reload();
   };
 
   const handleCancel = (appointmentId) => {
-    const updatedAppointments = appointments.filter((appointment) => appointment.id !== appointmentId);
-    setAppointments(updatedAppointments);
+    // We delete from local state
+    setAppointments([]);
+
+    // --- DELETE FROM LOCALSTORAGE ---
+    localStorage.removeItem(name);
+    localStorage.removeItem('doctorData');
+    // -------------------------------
+
     alert(`Your appointment with Dr. ${name} has been canceled.`);
+    
+    // Refresh the page to make the notification disappear.
+    window.location.reload(); 
   };
 
   return (
@@ -46,7 +78,8 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
               <div key={appointment.id} className="appointment-info">
                 <p><strong>Patient:</strong> {appointment.name}</p>
                 <p><strong>Date:</strong> {appointment.date}</p>
-                <p><strong>Time:</strong> {appointment.selectedSlot}</p>
+                {/* Here we are careful whether we use selectedSlot or time depending on the source */}
+                <p><strong>Time:</strong> {appointment.selectedSlot || appointment.time}</p>
                 <button 
                   className="cancel-appointment-btn" 
                   onClick={() => handleCancel(appointment.id)}

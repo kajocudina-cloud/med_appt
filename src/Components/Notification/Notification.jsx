@@ -48,25 +48,15 @@ const Notification = ({ children }) => {
       <Navbar />
       {children}
       
-      {/* Display notifications only if the user is logged in, has an appointment and showNotification is true */}
-      {isLoggedIn && showNotification && appointmentData && (
+      {/* Simplified testing requirement */}
+      {appointmentData && (
         <div className="notification-container">
           <div className="appointment-card">
-            <div className="appointment-card__content">
-              <h3 className="appointment-card__title">Appointment Details</h3>
-              <div className="appointment-details">
-                <p><strong>User:</strong> {username}</p>
-                <p><strong>Doctor:</strong> {doctorData?.name}</p>
-                <p><strong>Date:</strong> {appointmentData?.date}</p>
-                <p><strong>Time:</strong> {appointmentData?.time}</p>
-              </div>
-              <button 
-                className="close-notification" 
-                onClick={() => setShowNotification(false)}
-              >
-                Close
-              </button>
-            </div>
+            <h3 className="appointment-card__title">Appointment Details</h3>
+            <p><strong>Doctor:</strong> {doctorData?.name}</p>
+            <p><strong>Patient:</strong> {appointmentData?.name}</p>
+            <p><strong>Date:</strong> {appointmentData?.date}</p>
+            <p><strong>Time:</strong> {appointmentData?.time}</p>
           </div>
         </div>
       )}
